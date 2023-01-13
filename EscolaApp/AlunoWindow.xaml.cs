@@ -26,49 +26,60 @@ namespace EscolaApp
 
         private void InserirClick(object sender, RoutedEventArgs e)
         {
-            Aluno a = new Aluno();
-            a.Id = int.Parse(txtId.Text);
-            a.Nome = txtNome.Text;
-            a.Matricula = txtMatricula.Text;
-            a.Email = txtEmail.Text;
-            NAluno.Inserir(a);
-            ListarClick(sender, e);
+            int id = int.Parse(txtId.Text);
+            string nome = txtNome.Text;
+            string mat = txtMatricula.Text;
+            string email = txtEmail.Text;
+            int idTurma = int.Parse(txtIdTurma.Text);
+            Aluno t = new Aluno 
+           
+            {
+
+                Id = id,
+                Nome = nome,
+                Matricula = mat,
+                Email = email,
+                IdTurma = idTurma,
+            
+            };
+
         }
+            
 
         private void ListarClick(object sender, RoutedEventArgs e)
         {
             listAlunos.ItemsSource = null;
-            listAlunos.ItemsSource = NAluno.Listar();
+            listAlunos.ItemsSource = NTurma.Listar();
         }
 
         private void AtualizarClick(object sender, RoutedEventArgs e)
         {
-            Aluno a = new Aluno();
-            a.Id = int.Parse(txtId.Text);
-            a.Nome = txtNome.Text;
-            a.Matricula = txtMatricula.Text;
-            a.Email = txtEmail.Text;
-            NAluno.Atualizar(a);
+            Turma t = new Turma();
+            t.Id = int.Parse(txtId.Text);
+            t.Curso = txtCurso.Text;
+            t.Descricao = txtTurma.Text;
+            t.AnoLetivo = int.Parse(txtAno.Text);
+            NTurma.Atualizar(t);
             ListarClick(sender, e);
         }
 
         private void ExcluirClick(object sender, RoutedEventArgs e)
         {
-            Aluno a = new Aluno();
-            a.Id = int.Parse(txtId.Text);
-            NAluno.Excluir(a);
-            ListarClick(sender, e);
+            if (listAlunos.SelectedItem != null)
+            {
+                NAluno.
+            }
         }
 
-        private void listAlunos_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void listTurmas_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (listAlunos.SelectedItem != null)
             {
                 Aluno obj = (Aluno)listAlunos.SelectedItem;
                 txtId.Text = obj.Id.ToString();
-                txtNome.Text = obj.Nome;
-                txtMatricula.Text = obj.Matricula;
-                txtEmail.Text = obj.Email;
+                txtCurso.Text = obj.Curso;
+                txtTurma.Text = obj.Descricao;
+                txtAno.Text = obj.AnoLetivo.ToString();
             }
         }
     }
