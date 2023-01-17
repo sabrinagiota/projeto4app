@@ -15,7 +15,7 @@ namespace EscolaApp
         public int IdTurma { get; set; }
         public override string ToString()
         {
-            return $"{Id} - {Nome} - {Matricula} - {Email}";
+            return $"{Id} - {Nome} - {Matricula} - {Email} - Turma: {IdTurma}";
         }
     }
 }

@@ -9,12 +9,17 @@ using System.Threading.Tasks;
 
 namespace EscolaApp
 {
-    static class NTurma
+   static class NTurma
     {
         //private Turma[] turmas = new Turma[10];
         private static List<Turma> turmas = new List<Turma>();
         public static void Inserir(Turma t) {
             Abrir();
+            // Procurar o maior Id
+            int id = 0;
+            foreach (Turma obj in turmas)
+                if (obj.Id > id) id = obj.Id;
+            t.Id = id + 1;
             turmas.Add(t);
             Salvar();
         }
@@ -26,7 +31,8 @@ namespace EscolaApp
         public static void Atualizar(Turma t)
         {
             Abrir();
-            foreach(Turma obj in turmas)
+            // Percorrer a lista de turma procurando o id informado (t.Id)
+            foreach (Turma obj in turmas)
                 if (obj.Id == t.Id)
                 {
                     obj.Curso = t.Curso;
@@ -35,10 +41,10 @@ namespace EscolaApp
                 }
             Salvar();
         }
-
         public static void Excluir(Turma t)
         {
             Abrir();
+            // Percorrer a lista de turma procurando o id informado (t.Id)
             Turma x = null;
             foreach (Turma obj in turmas)
                 if (obj.Id == t.Id) x = obj;
@@ -50,21 +56,29 @@ namespace EscolaApp
             StreamReader f = null;
             try
             {
+                // Objeto que serializa (transforma) uma lista de turmas em um texto em XML
                 XmlSerializer xml = new XmlSerializer(typeof(List<Turma>));
+                // Objeto que abre um texto em um arquivo
                 f = new StreamReader("./turmas.xml");
+                // Chama a operação de desserialização informando a origem do texto XML
                 turmas = (List<Turma>)xml.Deserialize(f);
             }
             catch
             {
                 turmas = new List<Turma>();
             }
+            // Fecha o arquivo
             if (f != null) f.Close();
         }
         public static void Salvar()
         {
+            // Objeto que serializa (transforma) uma lista de turmas em um texto em XML
             XmlSerializer xml = new XmlSerializer(typeof(List<Turma>));
+            // Objeto que grava um texto em um arquivo
             StreamWriter f = new StreamWriter("./turmas.xml", false);
+            // Chama a operação de serialização informando o destino do texto XML
             xml.Serialize(f, turmas);
+            // Fecha o arquivo
             f.Close();
         }
     }
